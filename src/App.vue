@@ -17,10 +17,7 @@
 		</div>
 
 		<div id="weather-cards">
-			<div class="weather-card" v-for="i in 7" :key="i">
-				<span class="week-day">MON</span>
-				<span class="month-day">20</span>
-			</div>
+			<weather-card v-for="(info, i) in weatherInfo" :key="i" :info="info"/>
 		</div>
 
 		<p id="area-panel">This is the weekly forecast for the {{ this.region }} area.</p>
@@ -28,23 +25,35 @@
 </template>
 
 <script>
+import WeatherCard from "@/components/WeatherCard";
+
 export default {
 	name: "newtab",
+	components: {WeatherCard},
 	data() {
 		return {
 			today: new Date(),
-			region: ""
+			region: "",
+			weatherInfo: []
 		}
 	},
 	created() {
-		this.retrieveRegion();
+		this.retrieveCurrentWeather(41.331408, -8.569011, "2597951605976751b9fbc9aedaa4dd68")
 	},
 	methods: {
-		async retrieveRegion() {
-			const url = "https://geolocation-db.com/json/";
-			const response = await fetch(url);
+		async retrieveCurrentWeather(latitude, longitude, apiKey) {
+			const base = 'https://api.openweathermap.org';
+			const forecastEndpoint = new URL(`/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`, base)
+			const onecallEndpoint = new URL(`/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}`, base);
+			const forecastResponse = await (await fetch(forecastEndpoint)).json();
+			const onecallResponse = await (await fetch(onecallEndpoint)).json();
 
-			this.region = (await response.json())["state"];
+			console.log(onecallResponse)
+
+			this.region = forecastResponse["city"]["name"];
+			this.weatherInfo = onecallResponse["daily"].slice(1, 8);
+
+			console.log(this.weatherInfo)
 		}
 	}
 }
@@ -68,20 +77,6 @@ p {
 
 #weather-cards {
 	@apply flex flex-row space-x-3 justify-center items-center h-screen;
-}
-
-.weather-card {
-	@apply flex flex-col rounded text-center p-1;
-	background: rgb(255, 239, 48);
-	background: linear-gradient(180deg, rgba(255, 239, 48, 1) 0%, rgba(255, 202, 5, 1) 100%);
-
-	.week-day {
-		@apply text-sm;
-	}
-
-	.month-day {
-		@apply text-lg;
-	}
 }
 
 #area-panel {
