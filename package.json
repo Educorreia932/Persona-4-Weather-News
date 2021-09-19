@@ -1,0 +1,21 @@
+{
+	"name": "persona4-weather-news",
+	"version": "0.0.1",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"tailwind": "npx tailwindcss -i src/newtab/style.css -o src/newtab/tailwind.css --watch",
+		"ejs": "nodemon --watch src/newtab/newtab.ejs --exec \"ejs src/newtab/newtab.ejs -o src/newtab/newtab.html\""
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"autoprefixer": "^10.3.4",
+		"crx-hotreload": "^1.0.6",
+		"ejs": "^3.1.6",
+		"nodemon": "^2.0.12",
+		"postcss-import": "^14.0.2",
+		"tailwindcss": "^2.2.15"
+	}
+}

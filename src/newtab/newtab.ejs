@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="tailwind.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="upper-left">
+
+    </div>
+
+    <div id="weather-cards">
+        <% for (let i = 0; i < 7; i++) { %>
+            <div class="weather-card">
+                <span class="week-day">FRI</span>
+                <span class="month-day">24</span>
+            </div>
+        <% } %>
+    </div>
+
+    <div id="upper-right">
+        <div id="date">
+
+        </div>
+
+        <div id="day-period">
+
+        </div>
+    </div>
+
+    <p id="area-panel">This is the weekly forecast for the xxx area.</p>
+</body>
+</html>
