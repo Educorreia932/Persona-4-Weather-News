@@ -8,26 +8,33 @@
 
 <body>
     <div id="upper-left">
-
-    </div>
-
-    <div id="weather-cards">
-        <% for (let i = 0; i < 7; i++) { %>
-            <div class="weather-card">
-                <span class="week-day">FRI</span>
-                <span class="month-day">24</span>
-            </div>
-        <% } %>
+        <img id="rotating-circle" src="images/WEATHER_NEWS.SPR_3.png" alt="">
     </div>
 
     <div id="upper-right">
         <div id="date">
-
+            <p>09/19</p>
         </div>
 
         <div id="day-period">
 
         </div>
+    </div>
+
+    <div id="weather-cards">
+        <%
+        let date = new Date();
+
+        for (let i = 0; i < 7; i++) {
+        %>
+            <div class="weather-card">
+                <span class="week-day">FRI</span>
+                <span class="month-day"><%= date.getDate() %></span>
+            </div>
+        <%
+            date.setDate(date.getDate() + 1)
+        }
+        %>
     </div>
 
     <p id="area-panel">This is the weekly forecast for the xxx area.</p>
