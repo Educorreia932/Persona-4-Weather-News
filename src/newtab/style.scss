@@ -4,7 +4,7 @@
 }
 
 body {
-	@apply m-0 text-base bg-green-400 relative h-screen;
+	@apply m-0 text-base bg-gray-800 relative h-screen;
 	font-family: IwonaHeavyRegular, serif;
 }
 
@@ -13,7 +13,7 @@ p {
 }
 
 #weather-cards {
-	@apply flex flex-row space-x-3;
+	@apply flex flex-row space-x-3 justify-center items-center h-full;
 }
 
 .weather-card {
@@ -45,14 +45,11 @@ p {
 
 #rotating-circle {
 	@apply absolute;
-	top: 10%;
+	top: -9%;
+	left: -4%;
 	animation: rotation 8s infinite linear;
 }
 
 #upper-right {
 	@apply absolute right-0 top-0;
-
-	#date {
-
-	}
 }
