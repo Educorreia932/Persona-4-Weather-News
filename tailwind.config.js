@@ -11,5 +11,8 @@ module.exports = {
     variants: {
         extend: {}
     },
-    plugins: []
+    plugins: [],
+    corePlugins: {
+        preflight: false,
+    }
 }

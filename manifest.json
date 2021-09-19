@@ -1,8 +1,8 @@
 {
 	"manifest_version": 3,
 	"name": "Persona 4 Weather Report",
-	"version": "0.1",
-	"description": "Make your new tab page display a weather report in the style of Persona 4!",
+	"version": "0.0.1",
+	"description": "A Google Chrome extension that makes your New Tab page display the weather news in the style of Persona 4.",
 	"author": "Hacker Noon",
 	"chrome_url_overrides": {
 		"newtab": "/newtab/newtab.html"
