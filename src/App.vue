@@ -2,13 +2,14 @@
 	<div>
 		<div id="upper-left">
 			<img id="rotating-circle" src="./assets/images/WEATHER_NEWS.SPR_3.png" alt="">
+			<img src="./assets/images/WEATHER_NEWS.SPR_1.png" alt="">
 		</div>
 
 		<div id="upper-right">
-			<img src="./assets/images/CAMP.BIN_38.png" alt="">
+			<img id="circle" src="./assets/images/CAMP.BIN_38.png" alt="">
 
 			<div id="date">
-				<p>{{ today.getMonth() + 1 }}/{{ today.getDate() }}</p>
+				<p>{{ monthDay }}/{{ month }}{{ weekday }}</p>
 			</div>
 
 			<div id="day-period">
@@ -20,7 +21,10 @@
 			<weather-card v-for="(info, i) in weatherInfo" :key="i" :info="info"/>
 		</div>
 
-		<p id="area-panel">This is the weekly forecast for the {{ this.region }} area.</p>
+		<p id="area-panel">
+			This is the weekly forecast<br>
+			for the {{ this.region }} area.
+		</p>
 	</div>
 </template>
 
@@ -34,7 +38,16 @@ export default {
 		return {
 			today: new Date(),
 			region: "",
-			weatherInfo: []
+			weatherInfo: [],
+			weekday: "THU"
+		}
+	},
+	computed: {
+		monthDay() {
+			return String(this.today.getMonth() + 1).padStart(2, '0');
+		},
+		month() {
+			return String(this.today.getDate()).padStart(2, '0');
 		}
 	},
 	created() {
@@ -76,11 +89,11 @@ p {
 }
 
 #weather-cards {
-	@apply flex flex-row space-x-3 justify-center items-center h-screen;
+	@apply flex flex-row space-x-4 justify-center items-center h-screen;
 }
 
 #area-panel {
-	@apply bg-black text-white px-8 py-2 rounded-l w-9/12 right-0 bottom-1 absolute;
+	@apply bg-black text-white px-8 py-2 rounded-l w-9/12 h-1/5 right-0 bottom-1 absolute;
 }
 
 @keyframes rotation {
@@ -103,8 +116,13 @@ p {
 #upper-right {
 	@apply absolute right-0 top-0;
 
+	#circle {
+		@apply absolute right-0 top-0;
+	}
+
 	#date {
-		@apply text-white;
+		@apply absolute text-white right-20 z-10 top-0 rounded-xl;
+		background-color: #3d3c3f;
 	}
 }
 </style>

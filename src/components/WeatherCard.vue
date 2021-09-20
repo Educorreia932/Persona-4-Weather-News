@@ -2,6 +2,8 @@
 	<div class="weather-card">
 		<span class="week-day">{{ weekday }}</span>
 		<span class="month-day">{{ monthDay }}</span>
+
+		<img :src="require(`@/assets/images/weather/${weatherIcon}.png`)" alt="">
 	</div>
 </template>
 
@@ -15,6 +17,12 @@ const weekdayNames = [
 	"FRI",
 	"SAT"
 ]
+
+const weatherIcons = {
+	"Clear": "sunny",
+	"Clouds": "cloudy",
+	"Rain": "rain"
+}
 
 export default {
 	name: "WeatherCard",
@@ -32,6 +40,11 @@ export default {
 		},
 		monthDay() {
 			return this.date.getDate();
+		},
+		weatherIcon() {
+			const weather = this.info["weather"][0]["main"];
+
+			return weatherIcons[weather];
 		}
 	}
 }
@@ -39,8 +52,7 @@ export default {
 
 <style scoped lang="scss">
 .weather-card {
-	@apply flex flex-col rounded text-center p-1;
-	background: rgb(255, 239, 48);
+	@apply flex flex-col rounded-md text-center p-2;
 	background: linear-gradient(180deg, rgba(255, 239, 48, 1) 0%, rgba(255, 202, 5, 1) 100%);
 
 	.week-day {
@@ -48,8 +60,13 @@ export default {
 	}
 
 	.month-day {
-		@apply text-lg;
+		@apply text-xl;
 	}
 
+	img {
+		@apply rounded-md;
+		background-color: #423e40;
+		width: 3.5em;
+	}
 }
 </style>
