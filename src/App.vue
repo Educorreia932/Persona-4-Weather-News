@@ -1,19 +1,18 @@
 <template>
-	<div>
+	<div id="overlay">
 		<div id="upper-left">
 			<img id="rotating-circle" src="./assets/images/WEATHER_NEWS.SPR_3.png" alt="">
-			<img src="./assets/images/WEATHER_NEWS.SPR_1.png" alt="">
+			<img src="./assets/images/WEATHER_NEWS.SPR_1.png" class="top-24 absolute" width="350" alt="" >
 		</div>
 
 		<div id="upper-right">
-			<img id="circle" src="./assets/images/CAMP.BIN_38.png" alt="">
+			<img id="circle" src="./assets/images/YellowCircle.svg" alt="" width="400">
 
 			<div id="date">
-				<p>{{ monthDay }}/{{ month }}{{ weekday }}</p>
-			</div>
-
-			<div id="day-period">
-
+				<p>
+					<span class="text-base" style="line-height: 0.8">{{ monthDay }}/{{ month }}</span>
+					<span>{{ weekday }}</span>
+				</p>
 			</div>
 		</div>
 
@@ -29,6 +28,16 @@
 </template>
 
 <script>
+const weekdayNames = [
+	"SUN",
+	"MON",
+	"TUE",
+	"WED",
+	"THU",
+	"FRI",
+	"SAT"
+]
+
 import WeatherCard from "@/components/WeatherCard";
 
 export default {
@@ -39,7 +48,6 @@ export default {
 			today: new Date(),
 			region: "",
 			weatherInfo: [],
-			weekday: "THU"
 		}
 	},
 	computed: {
@@ -48,6 +56,9 @@ export default {
 		},
 		month() {
 			return String(this.today.getDate()).padStart(2, '0');
+		},
+		weekday() {
+			return weekdayNames[this.today.getDay()];
 		}
 	},
 	created() {
@@ -56,7 +67,7 @@ export default {
 	methods: {
 		async retrieveCurrentWeather(latitude, longitude, apiKey) {
 			const base = 'https://api.openweathermap.org';
-			const forecastEndpoint = new URL(`/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`, base)
+			const forecastEndpoint = new URL(`/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`, base);
 			const onecallEndpoint = new URL(`/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}`, base);
 			const forecastResponse = await (await fetch(forecastEndpoint)).json();
 			const onecallResponse = await (await fetch(onecallEndpoint)).json();
@@ -80,8 +91,15 @@ export default {
 }
 
 body {
-	@apply m-0 text-base bg-gray-800 relative h-screen;
+	@apply m-0 text-base bg-gray-800 relative h-screen overflow-hidden;
 	font-family: IwonaHeavyRegular, sans-serif;
+	background-image: url("assets/images/background/map.png");
+	background-size: cover;
+	background-position: right 0 bottom 50%;
+}
+
+#overlay {
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 p {
@@ -106,22 +124,23 @@ p {
 	}
 }
 
-#rotating-circle {
-	@apply absolute;
-	top: -9%;
-	left: -4%;
-	animation: rotation 8s infinite linear;
+#upper-left {
+	@apply absolute -left-16 -top-16;
+
+	#rotating-circle {
+		animation: rotation 8s infinite linear;
+	}
 }
 
 #upper-right {
-	@apply absolute right-0 top-0;
+	@apply relative top-0;
 
 	#circle {
-		@apply absolute right-0 top-0;
+		@apply absolute -right-52;
 	}
 
 	#date {
-		@apply absolute text-white right-20 z-10 top-0 rounded-xl;
+		@apply absolute text-white right-20 top-5 rounded-xl px-5 text-sm;
 		background-color: #3d3c3f;
 	}
 }
