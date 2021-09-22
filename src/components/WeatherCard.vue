@@ -36,7 +36,7 @@ export default {
 	},
 	computed: {
 		weekday() {
-			return weekdayNames[0];
+			return weekdayNames[this.date.getDay()];
 		},
 		monthDay() {
 			return this.date.getDate();

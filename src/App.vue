@@ -2,7 +2,7 @@
 	<div id="overlay">
 		<div id="upper-left">
 			<img id="rotating-circle" src="./assets/images/WEATHER_NEWS.SPR_3.png" alt="">
-			<img src="./assets/images/WEATHER_NEWS.SPR_1.png" class="top-24 absolute" width="350" alt="" >
+			<img src="./assets/images/WEATHER_NEWS.SPR_1.png" class="top-24 absolute" width="350" alt="">
 		</div>
 
 		<div id="upper-right">
@@ -47,7 +47,7 @@ export default {
 		return {
 			today: new Date(),
 			region: "",
-			weatherInfo: [],
+			weatherInfo: []
 		}
 	},
 	computed: {
@@ -62,7 +62,23 @@ export default {
 		}
 	},
 	created() {
-		this.retrieveCurrentWeather(41.331408, -8.569011, "2597951605976751b9fbc9aedaa4dd68")
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				const latitude = position.coords.latitude
+				const longitude = position.coords.longitude
+
+				this.retrieveCurrentWeather(latitude, longitude, "2597951605976751b9fbc9aedaa4dd68")
+			},
+			(error) => {
+				console.log(error)
+			},
+			{
+				enableHighAccuracy: true,
+				timeout: 5000,
+				maximumAge: 0
+			}
+		)
+
 	},
 	methods: {
 		async retrieveCurrentWeather(latitude, longitude, apiKey) {
