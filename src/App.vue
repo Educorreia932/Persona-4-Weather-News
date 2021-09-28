@@ -2,16 +2,16 @@
 	<div id="overlay">
 		<div id="upper-left">
 			<img id="rotating-circle" src="./assets/images/WEATHER_NEWS.SPR_3.png" alt="">
-			<img src="./assets/images/WEATHER_NEWS.SPR_1.png" class="top-24 absolute" width="350" alt="">
+			<img src="./assets/images/WEATHER_NEWS.SPR_1.png" class="top-24 absolute" alt="">
 		</div>
 
 		<div id="upper-right">
-			<img id="circle" src="./assets/images/YellowCircle.svg" alt="" width="400">
+			<img id="circle" src="./assets/images/YellowCircle.svg" alt="">
 
 			<div id="date">
 				<p>
 					<span class="text-base" style="line-height: 0.8">{{ monthDay }}/{{ month }}</span>
-					<span>{{ weekday }}</span>
+					<span id="weekday">{{ weekday }}</span>
 				</p>
 			</div>
 		</div>
@@ -64,8 +64,7 @@ export default {
 	created() {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
-				const latitude = position.coords.latitude
-				const longitude = position.coords.longitude
+				const {latitude, longitude} = position.coords
 
 				this.retrieveCurrentWeather(latitude, longitude, "2597951605976751b9fbc9aedaa4dd68")
 			},
@@ -141,10 +140,11 @@ p {
 }
 
 #upper-left {
-	@apply absolute -left-16 -top-16;
+	@apply absolute -left-16 -top-16 hidden sm:block;
 
 	#rotating-circle {
 		animation: rotation 8s infinite linear;
+		width: 10em;
 	}
 }
 
@@ -152,12 +152,18 @@ p {
 	@apply relative top-0;
 
 	#circle {
-		@apply absolute -right-52;
+		@apply absolute;
+		width: 6em;
+		right: 0;
 	}
 
 	#date {
 		@apply absolute text-white right-20 top-5 rounded-xl px-5 text-sm;
 		background-color: #3d3c3f;
+
+		#weekday {
+			@apply px-2.5 pr-10;
+		}
 	}
 }
 </style>

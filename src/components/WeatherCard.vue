@@ -3,7 +3,7 @@
 		<span class="week-day">{{ weekday }}</span>
 		<span class="month-day">{{ monthDay }}</span>
 
-		<img :src="require(`@/assets/images/weather/${weatherIcon}.png`)" alt="">
+		<img :src="require(`@/assets/images/weather/${weatherIcon}.svg`)" alt="">
 	</div>
 </template>
 
